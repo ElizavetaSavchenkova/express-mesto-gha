@@ -14,12 +14,16 @@ const getCertainUser = (req, res) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
-        res.status(400).send({ message: 'Пользователь с указанным id не найден' });
+        res.status(404).send({ message: 'Пользователь с указанным id не найден' });
         return;
       }
       res.send(user);
     })
-    .catch(() => {
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Введен некорректный id ' });
+        return;
+      }
       res.status(500).send({ message: 'Возникла ошибка на сервере' });
     });
 };
