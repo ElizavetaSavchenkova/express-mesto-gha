@@ -6,6 +6,7 @@ const app = express();
 const { PORT = 3000 } = process.env;
 
 const routerUsers = require('./routes/users');
+const routerCards = require('./routes/cards');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,9 +23,10 @@ app.use((req, res, next) => {
 });
 
 app.use('/users', routerUsers);
+app.use('/cards', routerCards);
 
 app.use((req, res) => {
-  res.status(404).send({ message: 'Страница не обнаружена' });
+  res.status(404).send({ message: 'Указанная страница не найдена' });
 });
 
 app.listen(PORT, () => {
