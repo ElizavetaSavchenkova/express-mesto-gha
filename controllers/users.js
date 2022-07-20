@@ -14,7 +14,7 @@ const getCertainUser = (req, res) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
-        res.status(404).send({ message: 'Пользователь с указанным id не найден' });
+        res.status(400).send({ message: 'Пользователь с указанным id не найден' });
         return;
       }
       res.send(user);
@@ -32,7 +32,7 @@ const createNewUser = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send({ message: 'Некорректные данные для добавления пользователя' });
+        res.status(400).send({ message: 'Введены некорректные данныые. Не удалось создать нового пользователя' });
         return;
       }
       res.status(500).send({ message: 'Возникла ошибка на сервере' });
